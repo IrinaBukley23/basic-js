@@ -16,16 +16,21 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function repeater(str, options) {
-  let repeatTimes = options.repeatTimes || null,
-      separator = options.separator || '+',
-      addition = options.addition || null,
-      additionRepeatTimes = options.additionRepeatTimes || null,
-      additionSeparator = addition ? (options.additionSeparator || '|') : null,
-      bigAddition = '';
-  if (addition) {
-    bigAddition = Array(additionRepeatTimes).fill(addition).join(additionSeparator)
-  }
-  return Array(repeatTimes).fill(str + bigAddition).join(separator);
+  const {
+		repeatTimes = 1,
+		separator = '+',
+		addition = '',
+		additionRepeatTimes = 1,
+		additionSeparator = '|',
+	} = options;
+
+	return Array(repeatTimes)
+		.fill(
+			`${String(str)}${Array(additionRepeatTimes)
+				.fill(String(addition))
+				.join(additionSeparator)}`
+		)
+		.join(separator);
 }
 
 module.exports = {
